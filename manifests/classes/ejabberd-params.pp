@@ -106,7 +106,7 @@ class ejabberd::params {
     }
 
     $ldap_tls_verify = $ejabberd_ldap_tls_verify ? {
-        ''      => 'soft',
+        ''      => 'false',
         default => "${ejabberd_ldap_tls_verify}",
     }
 

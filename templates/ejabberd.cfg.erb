@@ -169,7 +169,7 @@ override_acls.
 %%
 %% Encryption of connection to LDAP servers (LDAPS):
 {ldap_encrypt, <%= scope.lookupvar('ejabberd::ldap_encrypt') %>}.
-{ldap_tls_verify, false}.
+{ldap_tls_verify, <%= scope.lookupvar('ejabberd::ldap_tls_verify') %>}.
 %%
 %% Port connect to LDAP server:
 {ldap_port, <%= scope.lookupvar('ejabberd::ldap_port') %>}.

@@ -56,6 +56,7 @@ class ejabberd(
     $default_lang             = $ejabberd::params::default_lang,
     $ldap_server,
     $ldap_encrypt             = $ejabberd::params::ldap_encrypt,
+    $ldap_tls_verify          = $ejabberd::params::ldap_tls_verify,
     $ldap_port                = $ejabberd::params::ldap_port,
     $ldap_search_base         = $ejabberd::params::ldap_search_base,
     $ldap_deref               = $ejabberd::params::ldap_deref,
