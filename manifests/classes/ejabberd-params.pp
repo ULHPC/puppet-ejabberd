@@ -135,6 +135,16 @@ class ejabberd::params {
         default => "${ejabberd_ldap_filter}",
     }
 
+    $muc_log_dir = $ejabberd_muc_log_dir ? {
+        ''      => '/var/log/ejabberd/muc',
+        default => "${ejabberd_muc_log_dir}",
+    }
+
+    $muc_log_timezone = $ejabberd_muc_log_timezone ? {
+        ''      => 'local',
+        default => "${ejabberd_muc_log_timezone}",
+    }
+
     $admin = $ejabberd_admin ? {
         ''      => 'admin',
         default => "${ejabberd_admin}",
@@ -184,6 +194,16 @@ class ejabberd::params {
         default => 'root',
     }
     $configfile_group = $::operatingsystem ? {
+        default => 'ejabberd',
+    }
+
+    $muc_log_dir_mode = $::operatingsystem ? {
+        default => '700',
+    }
+    $muc_log_dir_owner = $::operatingsystem ? {
+        default => 'ejabberd',
+    }
+    $muc_log_dir_group = $::operatingsystem ? {
         default => 'ejabberd',
     }
 

@@ -61,6 +61,8 @@ class ejabberd(
     $ldap_deref               = $ejabberd::params::ldap_deref,
     $ldap_uid_attr            = $ejabberd::params::ldap_uid_attr,
     $ldap_filter              = $ejabberd::params::ldap_filter,
+    $muc_log_dir              = $ejabberd::params::muc_log_dir,
+    $muc_log_timezone         = $ejabberd::params::muc_log_timezone,
     $admin                    = $ejabberd::params::admin,
     $register                 = $ejabberd::params::register
 )
@@ -113,13 +115,24 @@ class ejabberd::common {
                    ],
     }
 
+    # MUC Log dir
+    file { "${ejabberd::params::muc_log_dir}":
+        ensure => 'directory',
+        owner  => "${ejabberd::params::muc_log_dir_owner}",
+        group  => "${ejabberd::params::muc_log_dir_group}",
+        mode   => "${ejabberd::params::muc_log_dir_mode}",
+        require => Package['ejabberd'],
+    }
+
+
     service { 'ejabberd':
         name       => "${ejabberd::params::servicename}",
         enable     => true,
         ensure     => running,
         require    => [
                        Package['ejabberd'],
-                       File["${ejabberd::params::configfile}"]
+                       File["${ejabberd::params::configfile}"],
+                       File["${ejabberd::params::muc_log_dir}"],
                       ],
     }
 
