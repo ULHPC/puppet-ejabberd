@@ -350,13 +350,13 @@ override_acls.
 %%		  {access, local},
 %%		  {shaper, c2s_shaper}
 %%		 ]},
-  {mod_pubsub,   [ % requires mod_caps
-		  {access_createnode, pubsub_createnode},
-		  {pep_sendlast_offline, false},
-		  {last_item_cache, false},
-		  %%{plugins, ["default", "pep"]}
-		  {plugins, ["flat", "hometree", "pep"]}  % pep requires mod_caps
-		 ]},
+%%  {mod_pubsub,   [ % requires mod_caps
+%%		  {access_createnode, pubsub_createnode},
+%%		  {pep_sendlast_offline, false},
+%%		  {last_item_cache, false},
+%%		  %%{plugins, ["default", "pep"]}
+%%		  {plugins, ["flat", "hometree", "pep"]}  % pep requires mod_caps
+%%		 ]},
   {mod_roster,   []},
   {mod_shared_roster,[]},
   {mod_stats,    []},
