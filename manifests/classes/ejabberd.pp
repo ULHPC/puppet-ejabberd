@@ -104,7 +104,7 @@ class ejabberd::common {
         require => Package['ejabberd'],
     }
 
-    file { 'ejabberd.conf':
+    file { "${ejabberd::params::configfile}":
         path    => "${ejabberd::params::configfile}",
         owner   => "${ejabberd::params::configfile_owner}",
         group   => "${ejabberd::params::configfile_group}",
@@ -115,6 +115,7 @@ class ejabberd::common {
                     File["${ejabberd::params::configdir}"],
                     Package['ejabberd']
                    ],
+        notify  => Service["${ejabberd::params::servicename}"]
     }
 
     # MUC Log dir
@@ -158,7 +159,6 @@ class ejabberd::debian inherits ejabberd::common {
            package  => '*',
            pin      => 'release n=wheezy',
            priority => 100,
-           require  => Apt::Source['wheezy']
         }
 
         apt::preferences {'wheezy_ejabberd2110':
@@ -168,14 +168,20 @@ class ejabberd::debian inherits ejabberd::common {
              lksctp-tools ejabberd',
            pin      => 'release n=wheezy',
            priority => 1500,
-           require  => Apt::Preferences['wheezy_all']
+        }
+
+        exec { 'ejabberd-apt-update':
+            command => 'apt-get update',
+            path    => '/usr/bin:/usr/sbin:/bin',
         }
 
         package { 'ejabberd':
             name    => "${ejabberd::params::packagename}",
             ensure  => "${ejabberd::ensure}",
-            require => Apt::Preferences['wheezy_ejabberd2110']
         }
+
+        Apt::Source['wheezy'] -> Apt::Preferences['wheezy_all'] -> Apt::Preferences['wheezy_ejabberd2110'] -> Exec['ejabberd-apt-update'] -> Package['ejabberd']
+
     } else {
         package { 'ejabberd':
             name    => "${ejabberd::params::packagename}",
