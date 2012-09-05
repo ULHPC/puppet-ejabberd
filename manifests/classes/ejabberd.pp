@@ -61,6 +61,7 @@ class ejabberd(
     $ldap_deref               = $ejabberd::params::ldap_deref,
     $ldap_uid_attr            = $ejabberd::params::ldap_uid_attr,
     $ldap_filter              = $ejabberd::params::ldap_filter,
+    $vcard_ldap_base          = '',
     $muc_log_dir              = $ejabberd::params::muc_log_dir,
     $muc_log_timezone         = $ejabberd::params::muc_log_timezone,
     $admin                    = $ejabberd::params::admin,

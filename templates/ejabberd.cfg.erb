@@ -357,7 +357,36 @@ override_acls.
   %%{mod_shared_roster_ldap,[]},
   {mod_stats,    []},
   {mod_time,     []},
+  <% if scope.lookupvar('ejabberd::vcard_ldap_base') != '' -%>
+  {mod_vcard_ldap,
+   [
+    %% define the addressbook's base
+    {ldap_base, "<%= scope.lookupvar('ejabberd::vcard_ldap_base') %>"},
+    %% Now we want to define vCard pattern
+    {ldap_vcard_map,
+     [{"NICKNAME", "%s %s", ["givenName", "sn"]}, % just use user's part of JID as his nickname
+      {"FIRST", "%s", ["givenName"]},
+      {"LAST", "%s", ["sn"]},
+      {"FN", "%s %s", ["givenName", "sn"]}, % example: "Smith, John"
+      {"EMAIL", "%s", ["mail"]},
+      {"BDAY", "%s", ["birthDay"]}]},
+    %% Search form
+    {ldap_search_fields,
+     [{"User", "%u"},
+      {"Name", "givenName"},
+      {"Family Name", "sn"},
+      {"Email", "mail"},
+      {"Birthday", "birthDay"}]},
+    %% vCard fields to be reported
+    %% Note that JID is always returned with search results
+    {ldap_search_reported,
+     [{"Full Name", "FN"},
+      {"Nickname", "NICKNAME"},
+      {"Birthday", "BDAY"}]}
+  ]},
+  <% else -%>
   {mod_vcard,    []},
+  <% end -%>
   {mod_version,  []}
  ]}.
 
