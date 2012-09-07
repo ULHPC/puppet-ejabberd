@@ -285,6 +285,7 @@ override_acls.
 
 %% Admins of this server are also admins of MUC service:
 {access, muc_admin, [{allow, admin}]}.
+{access, muc_local, [{allow, local}]}.
 
 %% All users are allowed to use MUC service:
 {access, muc, [{allow, all}]}.
@@ -330,8 +331,8 @@ override_acls.
   {mod_last,     []},
   {mod_muc,      [
 		  {access, muc},
-		  {access_create, muc},
-		  {access_persistent, muc},
+		  {access_create, muc_local},
+		  {access_persistent, muc_local},
 		  {access_admin, muc_admin},
 		  {max_users, 500}
 		 ]},
