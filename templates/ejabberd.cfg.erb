@@ -112,7 +112,7 @@ override_acls.
 			{shaper, c2s_shaper},
 			{max_stanza_size, 65536},
                         zlib,
-			starttls, {certfile, "/etc/ejabberd/ejabberd.pem"}
+			starttls, {certfile, "<%= scope.lookupvar('ejabberd::certfile_path') %>"}
 		       ]},
 
   {<%= scope.lookupvar('ejabberd::port_s2s') %>, ejabberd_s2s_in, [
