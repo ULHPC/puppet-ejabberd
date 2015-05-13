@@ -14,6 +14,9 @@ If you want to contribute to the code, you shall be aware of the way this module
            `-- manifests/
                 `-- init.pp      # Main manifests file which defines the ejabberd class 
                 `-- params.pp    # ULHPC-ejabberd module variables 
+                `-- ejabberd.pp 
+                `-- common.pp 
+                `-- common/debian.pp 
            `-- templates/        # Module ERB template files
            `-- tests/            # Contains examples showing how to declare the module’s classes and defined type
            `-- spec/             # Contains rspec tests 
