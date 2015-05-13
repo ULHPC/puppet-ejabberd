@@ -148,45 +148,9 @@ class ejabberd::common {
 # Specialization class for Debian systems
 class ejabberd::debian inherits ejabberd::common {
 
-    if ($::lsbdistid == 'Debian') and ( $::lsbdistcodename == 'squeeze' ) {
-        # If Debian Squeeze, use pinning in order to install ejabberd from Wheezy
-
-        apt::source{'wheezy':
-            content => "deb http://ftp.fr.debian.org/debian/ wheezy main contrib non-free\n",
-        }
-
-        apt::preferences {'wheezy_all':
-            package  => '*',
-            pin      => 'release n=wheezy',
-            priority => 100,
-        }
-
-        apt::preferences {'wheezy_ejabberd2110':
-            package  => 'erlang-asn1 erlang-base erlang-crypto erlang-inets
-              erlang-mnesia erlang-odbc erlang-public-key erlang-runtime-tools
-              erlang-ssl erlang-syntax-tools libltdl7 libodbc1 libsctp1 libtinfo5
-              lksctp-tools ejabberd',
-            pin      => 'release n=wheezy',
-            priority => 1500,
-        }
-
-        exec { 'ejabberd-apt-update':
-            command => 'apt-get update',
-            path    => '/usr/bin:/usr/sbin:/bin',
-        }
-
-        package { 'ejabberd':
-            ensure => $ejabberd::ensure,
-            name   => $ejabberd::params::packagename,
-        }
-
-        Apt::Source['wheezy'] -> Apt::Preferences['wheezy_all'] -> Apt::Preferences['wheezy_ejabberd2110'] -> Exec['ejabberd-apt-update'] -> Package['ejabberd']
-
-    } else {
-        package { 'ejabberd':
-            ensure => $ejabberd::ensure,
-            name   => $ejabberd::params::packagename,
-        }
+    package { 'ejabberd':
+        ensure => $ejabberd::ensure,
+        name   => $ejabberd::params::packagename,
     }
 }
 
