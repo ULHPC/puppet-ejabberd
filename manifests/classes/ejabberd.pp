@@ -79,7 +79,7 @@ inherits ejabberd::params
     case $::operatingsystem {
         debian, ubuntu:         { include ejabberd::debian }
         default: {
-            fail("Module $module_name is not supported on $operatingsystem")
+            fail("Module ${module_name} is not supported on ${::operatingsystem}")
         }
     }
 }
@@ -96,47 +96,47 @@ class ejabberd::common {
     require ejabberd::params
 
     # Configuration file
-    file { "${ejabberd::params::configdir}":
-        ensure => 'directory',
-        owner  => "${ejabberd::params::configdir_owner}",
-        group  => "${ejabberd::params::configdir_group}",
-        mode   => "${ejabberd::params::configdir_mode}",
+    file { $ejabberd::params::configdir:
+        ensure  => 'directory',
+        owner   => $ejabberd::params::configdir_owner,
+        group   => $ejabberd::params::configdir_group,
+        mode    => $ejabberd::params::configdir_mode,
         require => Package['ejabberd'],
     }
 
-    file { "${ejabberd::params::configfile}":
-        path    => "${ejabberd::params::configfile}",
-        owner   => "${ejabberd::params::configfile_owner}",
-        group   => "${ejabberd::params::configfile_group}",
-        mode    => "${ejabberd::params::configfile_mode}",
-        ensure  => "${ejabberd::ensure}",
-        content => template("ejabberd/ejabberd.cfg.erb"),
-        require => [
-                    File["${ejabberd::params::configdir}"],
+    file { $ejabberd::params::configfile:
+        ensure  => $ejabberd::ensure,
+        path    => $ejabberd::params::configfile,
+        owner   => $ejabberd::params::configfile_owner,
+        group   => $ejabberd::params::configfile_group,
+        mode    => $ejabberd::params::configfile_mode,
+        content => template('ejabberd/ejabberd.cfg.erb'),
+        require =>  [
+                    File[$ejabberd::params::configdir],
                     Package['ejabberd']
-                   ],
-        notify  => Service["${ejabberd::params::servicename}"]
+                    ],
+        notify  => Service[$ejabberd::params::servicename]
     }
 
     # MUC Log dir
-    file { "${ejabberd::params::muc_log_dir}":
-        ensure => 'directory',
-        owner  => "${ejabberd::params::muc_log_dir_owner}",
-        group  => "${ejabberd::params::muc_log_dir_group}",
-        mode   => "${ejabberd::params::muc_log_dir_mode}",
+    file { $ejabberd::params::muc_log_dir:
+        ensure  => 'directory',
+        owner   => $ejabberd::params::muc_log_dir_owner,
+        group   => $ejabberd::params::muc_log_dir_group,
+        mode    => $ejabberd::params::muc_log_dir_mode,
         require => Package['ejabberd'],
     }
 
 
     service { 'ejabberd':
-        name       => "${ejabberd::params::servicename}",
-        enable     => true,
-        ensure     => running,
-        require    => [
-                       Package['ejabberd'],
-                       File["${ejabberd::params::configfile}"],
-                       File["${ejabberd::params::muc_log_dir}"],
-                      ],
+        ensure  => running,
+        name    => $ejabberd::params::servicename,
+        enable  => true,
+        require => [
+                    Package['ejabberd'],
+                    File[$ejabberd::params::configfile],
+                    File[$ejabberd::params::muc_log_dir],
+                    ],
     }
 
 }
@@ -156,18 +156,18 @@ class ejabberd::debian inherits ejabberd::common {
         }
 
         apt::preferences {'wheezy_all':
-           package  => '*',
-           pin      => 'release n=wheezy',
-           priority => 100,
+            package  => '*',
+            pin      => 'release n=wheezy',
+            priority => 100,
         }
 
         apt::preferences {'wheezy_ejabberd2110':
-           package  => 'erlang-asn1 erlang-base erlang-crypto erlang-inets
-             erlang-mnesia erlang-odbc erlang-public-key erlang-runtime-tools
-             erlang-ssl erlang-syntax-tools libltdl7 libodbc1 libsctp1 libtinfo5
-             lksctp-tools ejabberd',
-           pin      => 'release n=wheezy',
-           priority => 1500,
+            package  => 'erlang-asn1 erlang-base erlang-crypto erlang-inets
+              erlang-mnesia erlang-odbc erlang-public-key erlang-runtime-tools
+              erlang-ssl erlang-syntax-tools libltdl7 libodbc1 libsctp1 libtinfo5
+              lksctp-tools ejabberd',
+            pin      => 'release n=wheezy',
+            priority => 1500,
         }
 
         exec { 'ejabberd-apt-update':
@@ -176,16 +176,16 @@ class ejabberd::debian inherits ejabberd::common {
         }
 
         package { 'ejabberd':
-            name    => "${ejabberd::params::packagename}",
-            ensure  => "${ejabberd::ensure}",
+            ensure => $ejabberd::ensure,
+            name   => $ejabberd::params::packagename,
         }
 
         Apt::Source['wheezy'] -> Apt::Preferences['wheezy_all'] -> Apt::Preferences['wheezy_ejabberd2110'] -> Exec['ejabberd-apt-update'] -> Package['ejabberd']
 
     } else {
         package { 'ejabberd':
-            name    => "${ejabberd::params::packagename}",
-            ensure  => "${ejabberd::ensure}",
+            ensure => $ejabberd::ensure,
+            name   => $ejabberd::params::packagename,
         }
     }
 }

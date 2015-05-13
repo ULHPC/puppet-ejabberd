@@ -15,7 +15,7 @@
 
 include 'ejabberd::params'
 
-$names = ["ensure", "protocol", "port", "packagename"]
+$names = ['ensure', 'protocol', 'port', 'packagename']
 
 notice("ejabberd::params::ensure = ${ejabberd::params::ensure}")
 notice("ejabberd::params::protocol = ${ejabberd::params::protocol}")
