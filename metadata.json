@@ -20,7 +20,6 @@
     {
       "operatingsystem": "Debian",
       "operatingsystemrelease": [
-        "6",
         "7"
       ]
     }
@@ -33,7 +32,7 @@
   "classes": [
     "ejabberd",
     "ejabberd::common",
-    "ejabberd::debian",
+    "ejabberd::common::debian",
     "ejabberd::params"
   ],
   "definitions": [
