@@ -95,7 +95,7 @@ override_acls.
 %% {hosts, ["example.net", "example.com", "example.org"]}.
 %%
 %% (This option is defined by debconf earlier)
-{hosts, ["<%= fqdn %>"]}.
+{hosts, ["<%= @fqdn %>"]}.
 
 
 %%%   ===============
@@ -246,7 +246,7 @@ override_acls.
 %% The 'admin' ACL grants administrative privileges to Jabber accounts.
 %% You can put as many accounts as you want.
 %%
-<% admin.each do |val| %>{acl, admin, {user, "<%= val %>", "<%= fqdn %>"}}.
+<% @admin.each do |val| %>{acl, admin, {user, "<%= val %>", "<%= @fqdn %>"}}.
 <% end %>
 
 %%
