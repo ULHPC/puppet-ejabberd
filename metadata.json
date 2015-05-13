@@ -25,5 +25,18 @@
       ]
     }
   ],
-  "tags": ["ejabberd", "xmpp", "jabber"]
+  "tags": [
+    "ejabberd",
+    "xmpp",
+    "jabber"
+  ],
+  "classes": [
+    "ejabberd",
+    "ejabberd::common",
+    "ejabberd::debian",
+    "ejabberd::params"
+  ],
+  "definitions": [
+
+  ]
 }
