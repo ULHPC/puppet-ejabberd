@@ -16,5 +16,14 @@
 #      sudo puppet apply -t /vagrant/tests/init.pp
 #
 node default {
-    include ejabberd
+    class { 'ejabberd':
+        ldap_server      => 'ldap-server.uni.lux',
+        ldap_encrypt     => 'tls',
+        ldap_tls_verify  => 'soft',
+        ldap_search_base => 'ou=Jabber,ou=Services,dc=uni,dc=lu',
+        vcard_ldap_base  => 'ou=People,dc=uni,dc=lu',
+        ldap_filter      => '(objectClass=inetOrgPerson)',
+        ldap_deref       => 'searching',
+        admin            => ['admin1', 'admin2']
+    }
 }
