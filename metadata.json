@@ -1,0 +1,41 @@
+{
+  "name": "ULHPC-ejabberd",
+  "version": "0.1.0",
+  "author": "UL HPC Management Team",
+  "mail": "hpc-sysadmins@uni.lu",
+  "summary": "Configure and manage ejabberd",
+  "description": "Configure and manage ejabberd",
+  "license": "GPL-3.0",
+  "source": "https://github.com/ULHPC/puppet-ejabberd",
+  "project_page": "https://github.com/ULHPC/puppet-ejabberd",
+  "issues_url": "https://github.com/ULHPC/puppet-ejabberd/issues",
+  "forge_url": "https://forge.puppetlabs.com/ULHPC/ejabberd",
+  "dependencies": [
+    {
+      "name": "puppetlabs-stdlib",
+      "version_requirement": ">=4.2.2 <5.0.0"
+    }
+  ],
+  "operatingsystem_support": [
+    {
+      "operatingsystem": "Debian",
+      "operatingsystemrelease": [
+        "7"
+      ]
+    }
+  ],
+  "tags": [
+    "ejabberd",
+    "xmpp",
+    "jabber"
+  ],
+  "classes": [
+    "ejabberd",
+    "ejabberd::common",
+    "ejabberd::common::debian",
+    "ejabberd::params"
+  ],
+  "definitions": [
+
+  ]
+}

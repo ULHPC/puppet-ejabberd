@@ -20,6 +20,10 @@ Configure and manage ejabberd.
 This module implements the following elements: 
 
 * __Puppet classes__:
+    - `ejabberd` 
+    - `ejabberd::common` 
+    - `ejabberd::common::debian` 
+    - `ejabberd::params` 
 
 * __Puppet definitions__: 
 
@@ -50,6 +54,15 @@ Use is as follows:
 
 See also [`tests/init.pp`](tests/init.pp)
 
+### Class `ejabberd::common`
+
+See [`tests/common.pp`](tests/common.pp)
+### Class `ejabberd::common::debian`
+
+See [`tests/common/debian.pp`](tests/common/debian.pp)
+### Class `ejabberd::params`
+
+See [`tests/params.pp`](tests/params.pp)
 
 
 ## Librarian-Puppet / R10K Setup
