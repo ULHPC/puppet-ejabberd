@@ -41,6 +41,7 @@
 #
 class ejabberd(
     $ensure                   = $ejabberd::params::ensure,
+    $hosts                    = $ejabberd::params::hosts,
     $log_level                = $ejabberd::params::log_level,
     $port_c2s                 = $ejabberd::params::port_c2s,
     $port_s2s                 = $ejabberd::params::port_s2s,
