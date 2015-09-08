@@ -35,6 +35,9 @@ class ejabberd::params {
         default => $::ejabberd_ensure
     }
 
+    # managed hosts
+    $hosts = []
+
     # The Protocol used. Used by monitor and firewall class. Default is 'tcp'
     $log_level = $::ejabberd_loglevel ? {
         ''      => '4',
