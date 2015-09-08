@@ -48,6 +48,11 @@ class ejabberd::params {
         ''      => '5222',
         default => $::ejabberd_port_c2s,
     }
+    $enable_xmpps = false
+    $xmpps_port_c2s = $::ejabberd_xmpps_port_c2s ? {
+        ''      => '5223',
+        default => $::ejabberd_xmpps_port_c2s,
+    }
     $port_s2s = $::ejabberd_port_s2s ? {
         ''      => '5269',
         default => $::ejabberd_port_s2s,
