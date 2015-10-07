@@ -95,7 +95,10 @@ override_acls.
 %% {hosts, ["example.net", "example.com", "example.org"]}.
 %%
 %% (This option is defined by debconf earlier)
-{hosts, ["<%= @fqdn %>"]}.
+{hosts, [<%- if @hosts.empty? !=true -%>
+<%- @hosts.each_with_index do |val, i| -%>"<%= val %>"<%= ", " if i < (@hosts.size - 1) %><%- end -%>
+<%- else -%>"<%= @fqdn %>"<%- end -%>
+]}.
 
 
 %%%   ===============
@@ -114,6 +117,15 @@ override_acls.
                         zlib,
 			starttls, {certfile, "<%= scope.lookupvar('ejabberd::certfile_path') %>"}
 		       ]},
+<%- if @enable_xmpps == true -%>
+  {<%= scope.lookupvar('ejabberd::xmpps_port_c2s') %>, ejabberd_c2s, [
+			{access, c2s},
+			{shaper, c2s_shaper},
+			{max_stanza_size, 65536},
+                        zlib,
+			tls, {certfile, "<%= scope.lookupvar('ejabberd::certfile_path') %>"}
+		       ]},
+<%- end -%>
 
   {<%= scope.lookupvar('ejabberd::port_s2s') %>, ejabberd_s2s_in, [
 			   {shaper, s2s_shaper},
@@ -246,8 +258,15 @@ override_acls.
 %% The 'admin' ACL grants administrative privileges to Jabber accounts.
 %% You can put as many accounts as you want.
 %%
-<% @admin.each do |val| %>{acl, admin, {user, "<%= val %>", "<%= @fqdn %>"}}.
-<% end %>
+<%- @admin.each do |val|
+    curitem = val.split('@')
+    if curitem.size == 1 -%>
+{acl, admin, {user, "<%= val %>", "<%= @fqdn %>"}}.
+<%- else -%>
+{acl, admin, {user, "<%= curitem[0] %>", "<%= curitem[1] %>"}}.
+<%- end
+    end -%>
+
 
 %%
 %% Local users: don't modify this line.

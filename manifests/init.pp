@@ -41,8 +41,11 @@
 #
 class ejabberd(
     $ensure                   = $ejabberd::params::ensure,
+    $hosts                    = $ejabberd::params::hosts,
     $log_level                = $ejabberd::params::log_level,
     $port_c2s                 = $ejabberd::params::port_c2s,
+    $enable_xmpps             = $ejabberd::params::enable_xmpps,
+    $xmpps_port_c2s           = $ejabberd::params::xmpps_port_c2s,
     $port_s2s                 = $ejabberd::params::port_s2s,
     $port_http_admin          = $ejabberd::params::port_http_admin,
     $s2s_starttls             = $ejabberd::params::s2s_starttls,

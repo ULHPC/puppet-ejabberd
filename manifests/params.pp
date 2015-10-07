@@ -35,6 +35,9 @@ class ejabberd::params {
         default => $::ejabberd_ensure
     }
 
+    # managed hosts
+    $hosts = []
+
     # The Protocol used. Used by monitor and firewall class. Default is 'tcp'
     $log_level = $::ejabberd_loglevel ? {
         ''      => '4',
@@ -44,6 +47,11 @@ class ejabberd::params {
     $port_c2s = $::ejabberd_port_c2s ? {
         ''      => '5222',
         default => $::ejabberd_port_c2s,
+    }
+    $enable_xmpps = false
+    $xmpps_port_c2s = $::ejabberd_xmpps_port_c2s ? {
+        ''      => '5223',
+        default => $::ejabberd_xmpps_port_c2s,
     }
     $port_s2s = $::ejabberd_port_s2s ? {
         ''      => '5269',

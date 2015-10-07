@@ -50,6 +50,7 @@ class ejabberd::common {
         ensure  => running,
         name    => $ejabberd::params::servicename,
         enable  => true,
+        status  => "service ${ejabberd::params::servicename} live",
         require => [
                     Package['ejabberd'],
                     File[$ejabberd::params::configfile],
