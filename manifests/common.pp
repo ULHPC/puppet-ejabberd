@@ -28,7 +28,7 @@ class ejabberd::common {
         owner   => $ejabberd::params::configfile_owner,
         group   => $ejabberd::params::configfile_group,
         mode    => $ejabberd::params::configfile_mode,
-        content => template('ejabberd/ejabberd.cfg.erb'),
+        content => template("ejabberd/$ejabberd::params::configtemplate"),
         require =>  [
                     File[$ejabberd::params::configdir],
                     Package['ejabberd']

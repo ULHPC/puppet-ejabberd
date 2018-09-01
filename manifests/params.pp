@@ -193,7 +193,18 @@ class ejabberd::params {
     }
 
     $configfile = $::operatingsystem ? {
+        /Debian/ => $::operatingsystemmajrelease ? {
+            /^7$/ => '/etc/ejabberd/ejabberd.cfg',
+            default => '/etc/ejabberd/ejabberd.yml',
+        },
         default => '/etc/ejabberd/ejabberd.cfg',
+    }
+    $configtemplate = $::operatingsystem ? {
+        /Debian/ => $::operatingsystemmajrelease ? {
+            /^7$/ => 'ejabberd.cfg.erb',
+            default => 'ejabberd.yml.erb',
+        },
+        default => 'ejabberd.cfg.erb',
     }
     $configfile_mode = $::operatingsystem ? {
         default => '0640',
